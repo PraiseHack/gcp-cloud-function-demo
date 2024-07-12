@@ -1,7 +1,7 @@
 name: CI checks
 
 on:
-  pull_requests:
+  pull_request:
     types: [opened, synchronize, reopened]
 
 
