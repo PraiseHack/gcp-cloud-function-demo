@@ -7,11 +7,11 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # specify the machine type
 
     steps:
-    - name: checkout code
-    - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
     - id: 'auth'
       uses: 'google-github-actions/auth@v2'
@@ -21,7 +21,7 @@ jobs:
     - name: Set up Google Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
       with:
-        project_id: ${{ secrets.GCP_PROJECT_ID}}
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
 
     - name: Deploy to Google Cloud Functions
       uses: google-github-actions/deploy-cloud-functions@v2
@@ -31,4 +31,3 @@ jobs:
         event_trigger_type: 'google.storage.object.finalize'
         event_trigger_resource: 'alt-ordes-demo'
         entry_point: 'file_processor'
-
