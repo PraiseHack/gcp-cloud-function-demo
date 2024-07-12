@@ -1,18 +1,23 @@
 name: CI checks
 
 on:
-  pull_requests:
+  pull_request:
     types: [opened, synchronize, reopened]
-
 
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v2
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
         with:
           python-version: 3.10
-      - run: |
-          pip install black
-          black --check .
+
+      - name: Install Black
+        run: pip install black
+
+      - name: Run Black
+        run: black --check .
