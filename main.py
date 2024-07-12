@@ -10,7 +10,7 @@ def file_processor(event, context):
          context (google.cloud.functions.Context): Metadata for the event.
     """
     bucket_name = event ["bucket"]
-    file_name = event ['name']
+    file_name = event ["name"]
 
     gcs_uri = f"gs://{bucket_name}/{file_name}"
     load_to_bigquery(file_uri=gcs_uri, dataset_id="alt_school_commerce", table_id="customer_orders")
