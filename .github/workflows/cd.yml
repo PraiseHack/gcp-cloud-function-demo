@@ -8,11 +8,7 @@ on:
 
 jobs:
   deploy:
-    runs-on:
-    # permissions:
-    #   contents: 'read'
-    #   id-token: 'write'
-
+    runs-on: ubuntu-latest
 
     steps:
     - name: checkout code
@@ -27,8 +23,6 @@ jobs:
       uses: google-github-actions/setup-gcloud@v2
       with:
         project_id: ${{ secrets.GCP_PROJECT_ID}}
-        # export_default_credentials: False
-
 
     - name: Deploy to Google Cloud Functions
       uses: google-github-actions/deploy-cloud-functions@v2
@@ -36,6 +30,6 @@ jobs:
         name: 'customer_order_processor'
         runtime: 'python310'
         event_trigger_type: 'google.storage.object.finalize'
-        event_trigger_resource: 'projects/${{ secrets.GCP_PROJECT_ID }}/buckets/alt-ordes-demo'
+        event_trigger_resource: 'alt-ordes-demo'
         entry_point: 'file_processor'
 
