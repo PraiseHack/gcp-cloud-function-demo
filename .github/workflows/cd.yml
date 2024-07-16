@@ -1,41 +1,33 @@
-name: Continuous Deployment to GCP Cloud Function
+name: Continuous_Deployment_to_GCP_Cloud_Function
 
 on:
   push:
     branches:
      - main
 
-
 jobs:
   deploy:
-    runs-on:
-    # permissions:
-    #   contents: 'read'
-    #   id-token: 'write'
-
+    runs-on: ubuntu-latest 
 
     steps:
-    - name: checkout code
-    - uses: actions/checkout@v3
+    - name: Checkout_code
+      uses: actions/checkout@v3
 
     - id: 'auth'
       uses: 'google-github-actions/auth@v2'
       with:
         credentials_json: '${{ secrets.GCP_DEPLOYMENT_SA_KEY }}'
 
-    - name: Set up Google Cloud SDK
+    - name: Set_up_Google_Cloud_SDK
       uses: google-github-actions/setup-gcloud@v2
       with:
-        project_id: ${{ secrets.GCP_PROJECT_ID}}
-        # export_default_credentials: False
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
 
-
-    - name: Deploy to Google Cloud Functions
+    - name: Deploy_to_Google_Cloud_Functions
       uses: google-github-actions/deploy-cloud-functions@v2
       with: 
         name: 'customer_order_processor'
         runtime: 'python310'
         event_trigger_type: 'google.storage.object.finalize'
-        event_trigger_resource: 'projects/${{ secrets.GCP_PROJECT_ID }}/buckets/alt-ordes-demo'
+        event_trigger_resource: 'alt-ordes-demo'
         entry_point: 'file_processor'
-
